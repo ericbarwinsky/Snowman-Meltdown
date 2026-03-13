@@ -51,6 +51,14 @@ STAGES = [
 ]
 
 
+def get_validated_input():
+    while True:
+        guess = input("Guess a letter: ")
+        if len(guess) == 1:
+            if guess.isalpha():
+                return guess.lower()
+
+
 def get_random_word():
     """Selects a random word from the list."""
     return WORDS[random.randint(0, len(WORDS) - 1)]
@@ -76,7 +84,7 @@ def right_word(secret_word, guessed_letters):
 
 def get_info_next_round():
     while True:
-        next_round = input("\nDo you want another round? Yes(Y) No(No)")
+        next_round = input("\nDo you want another round? Yes(Y) No(No) ")
         next_round = next_round.lower()
         match next_round:
             case "y":
@@ -98,8 +106,11 @@ def play_game():
 
         while mistakes != 5:
             display_game_state(mistakes, secret_word, guessed_letters)
-            guess = input("Guess a letter: ").lower()
+
+            guess = get_validated_input()
+
             print("You guessed:", guess)
+
             if guess in letter_game_list:
                 print("You already guessed that letter.")
             elif guess not in secret_word:
