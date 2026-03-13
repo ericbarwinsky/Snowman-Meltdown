@@ -3,7 +3,7 @@ import game_logic as gl
 
 def get_info_next_round():
     while True:
-        next_round = input("\nDo you want another round? Yes(Y) No(No) ")
+        next_round = input("\nDo you want another round? Yes(Y) No(N) ")
         next_round = next_round.lower()
         match next_round:
             case "y":
