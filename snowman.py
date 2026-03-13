@@ -7,33 +7,48 @@ WORDS = ["python", "git", "github", "snowman", "meltdown"]
 
 # Snowman ASCII Art stages
 STAGES = [
-     # Stage 0: Full snowman
-     """
-      ___  
-     /___\\ 
-     (o o) 
-     ( : ) 
-     ( : ) 
-     """,
-     # Stage 1: Bottom part starts melting
-     """
-      ___  
-     /___\\ 
-     (o o) 
-     ( : ) 
-     """,
-     # Stage 2: Only the head remains
-     """
-      ___  
-     /___\\ 
-     (o o) 
-     """,
-     # Stage 3: Snowman completely melted
-     """
-      ___  
-     /___\\ 
-     """
- ]
+    # Stage 0: Full snowman
+    """
+     ___  
+    /___\\ 
+    (o o) 
+    ( : ) 
+    ( : ) 
+    """,
+    # Stage 1: Bottom part starts melting
+    """
+     ___  
+    /___\\ 
+    (o o) 
+    ( : ) 
+     (:) 
+    """,
+    # Stage 2: Bottom part is melted
+    """
+     ___  
+    /___\\ 
+    (o o) 
+    ( : ) 
+    """,
+    #Stage 3: Middle part starts melting
+    """
+     ___  
+    /___\\ 
+    (o o) 
+     (:) 
+    """,
+    # Stage 4: Only the head remains
+    """
+     ___  
+    /___\\ 
+    (o o) 
+    """,
+    # Stage 5: Snowman completely melted
+    """
+     ___  
+    /___\\ 
+    """
+]
 
 
 def get_random_word():
@@ -59,34 +74,51 @@ def right_word(secret_word, guessed_letters):
     return all_guessed
 
 
+def get_info_next_round():
+    while True:
+        next_round = input("\nDo you want another round? Yes(Y) No(No)")
+        next_round = next_round.lower()
+        match next_round:
+            case "y":
+                return True
+            case "n":
+                return False
+            case _:
+                continue
+
+
 def play_game():
-    secret_word = get_random_word()
-    print("Welcome to Snowman Meltdown!")
+    while True:
+        secret_word = get_random_word()
+        print("Welcome to Snowman Meltdown!")
 
-    mistakes = 0
-    guessed_letters = []
-    letter_game_list =[]
+        mistakes = 0
+        guessed_letters = []
+        letter_game_list =[]
 
-    while mistakes != 3:
-        display_game_state(mistakes, secret_word, guessed_letters)
-        guess = input("Guess a letter: ").lower()
-        print("You guessed:", guess)
-        if guess in letter_game_list:
-            print("You already guessed that letter.")
-        elif guess not in secret_word:
-            letter_game_list.append(guess)
-            mistakes += 1
-        else:
-            guessed_letters.append(guess)
-            letter_game_list.append(guess)
+        while mistakes != 5:
+            display_game_state(mistakes, secret_word, guessed_letters)
+            guess = input("Guess a letter: ").lower()
+            print("You guessed:", guess)
+            if guess in letter_game_list:
+                print("You already guessed that letter.")
+            elif guess not in secret_word:
+                letter_game_list.append(guess)
+                mistakes += 1
+            else:
+                guessed_letters.append(guess)
+                letter_game_list.append(guess)
 
-        if right_word(secret_word, guessed_letters):
-            print("Congratulation! you have safed the snowman!")
-            break
+            if right_word(secret_word, guessed_letters):
+                print("Congratulation! you have safed the snowman!")
+                break
 
-    if mistakes == 3:
-        print(f"Game Over! The word was: {secret_word}")
-
+        if mistakes == 5:
+            print(STAGES[mistakes])
+            print(f"Game Over! The word was: {secret_word}")
+            info_next_round = get_info_next_round()
+            if not info_next_round:
+                break
 
 if __name__ == "__main__":
     play_game()
