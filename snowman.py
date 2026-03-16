@@ -18,6 +18,7 @@ def main():
     while True:
         gl.play_game()
         if not get_info_next_round():
+            print("Bye")
             break
 
 
