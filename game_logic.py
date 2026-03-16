@@ -8,6 +8,11 @@ WORDS = ["python", "git", "github", "snowman", "meltdown"]
 
 
 def get_validated_input():
+    """
+        Prompts the user for a single letter, validates that the input
+        is an alphabetic character, and returns it in lowercase.
+    """
+
     while True:
         guess = input("Guess a letter: ")
         if len(guess) == 1:
@@ -16,6 +21,12 @@ def get_validated_input():
 
 
 def display_game_state(mistakes, secret_word, guessed_letters):
+    """
+        Displays the current visual state of the snowman based on the
+        number of mistakes and shows the secret word with underscores
+        for hidden letters.
+    """
+
     print(aa.STAGES[mistakes])
     display_word = []
     for char in secret_word:
@@ -32,6 +43,11 @@ def get_random_word():
 
 
 def right_word(secret_word, guessed_letters):
+    """
+        Checks if all unique letters of the secret word have been
+        guessed by comparing sets. Returns True if the word is complete.
+    """
+
     letters_secret_word = set(secret_word)
     set_guessed_letters = set(guessed_letters)
     all_guessed = letters_secret_word.issubset(set_guessed_letters)
@@ -39,6 +55,11 @@ def right_word(secret_word, guessed_letters):
 
 
 def play_game():
+    """
+        Runs the main game loop, handling initialization, input processing,
+        mistake counting, and determining the win or loss condition.
+    """
+
     secret_word = get_random_word()
     print("Welcome to Snowman Meltdown!")
 
