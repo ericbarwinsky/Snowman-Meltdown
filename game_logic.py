@@ -18,7 +18,10 @@ def get_validated_input():
         if len(guess) == 1:
             if guess.isalpha():
                 return guess.lower()
-
+            else:
+                print("Please enter only a single letter of the alphabet.")
+        else:
+            print("Please enter only a single letter of the alphabet.")
 
 def display_game_state(mistakes, secret_word, guessed_letters):
     """
@@ -64,8 +67,8 @@ def play_game():
     print("Welcome to Snowman Meltdown!")
 
     mistakes = 0
-    guessed_letters = []
-    letter_game_list =[]
+    guessed_letters = []           #list only for the right letters
+    all_used_letters_round =[]     #list for all letters in a round
 
     while mistakes != 5:
         display_game_state(mistakes, secret_word, guessed_letters)
@@ -73,14 +76,14 @@ def play_game():
         guess = get_validated_input()
         print("You guessed:", guess)
 
-        if guess in letter_game_list:
+        if guess in all_used_letters_round:
             print("You already guessed that letter.")
         elif guess not in secret_word:
-            letter_game_list.append(guess)
+            all_used_letters_round.append(guess)
             mistakes += 1
         else:
             guessed_letters.append(guess)
-            letter_game_list.append(guess)
+            all_used_letters_round.append(guess)
 
         if right_word(secret_word, guessed_letters):
             print("Congratulation! you have safed the snowman!")
