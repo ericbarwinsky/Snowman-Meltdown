@@ -16,6 +16,7 @@ def get_info_next_round():
             case "n":
                 return False
             case _:
+                print("Please enter 'y' for yes or 'n' for no.")
                 continue
 
 
